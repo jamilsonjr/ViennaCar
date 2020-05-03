@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Vienna Car part2</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-04-30"><meta name="DC.source" content="main.m"><style type="text/css">
+      --><title>Vienna Car part2</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-01"><meta name="DC.source" content="main.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,75 +66,70 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Vienna Car part2</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Induction Motor Model Characteristics</a></li></ul></div><h2 id="1">Induction Motor Model Characteristics</h2><p>For the first task with the already known constants it's possible to calculate the values for the remaining incognites of the indution motor equivelent circuit. Starting with the Stator current:</p><p><img src="main_eq16104604041291816256.png" alt="$I_s = { V_S \over  Z_S + ({R_R \over S} + j\omega L_R) // ( j \omega L_{Ms})}$" style="width:159px;height:25px;"></p><pre class="codeinput"><span class="comment">% -&gt; With respects to the %V_{Ms}% we obtain the following expression with KVL:</span>
-
-<span class="comment">% \begin{equation}</span>
-<span class="comment">%    V_{Ms} = V_S - I_S * Z_S</span>
-<span class="comment">% \end{equation}</span>
+  </style></head><body><div class="content"><h1>Vienna Car part2</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Induction Motor Model Characteristics</a></li></ul></div><h2 id="1">Induction Motor Model Characteristics</h2><p>For the first task with the already known constants it's possible to calculate the values for the remaining incognites of the indution motor equivelent circuit.</p><p>Starting with the stator current:</p><p><img src="main_eq11321955603705661416.png" alt="$$I_s = { V_S \over  Z_S + ({R_R \over S} + j\omega L_R) //( j \omega&#xA;L_{Ms})}$$" style="width:220px;height:37px;"></p><p>With respects to the <img src="main_eq02531274156756393948.png" alt="$V_{Ms}$" style="width:23px;height:13px;"> we obtain the following expression with KVL:</p><p><img src="main_eq09434098590116576952.png" alt="$$ V_{Ms} = V_S - I_S * Z_S $$" style="width:123px;height:13px;"></p><p>Then we procede to calculate <img src="main_eq17718874756493260477.png" alt="$I_R$" style="width:15px;height:13px;"> with KCL:</p><p><img src="main_eq11981069924829245216.png" alt="$$ I_R = I_S - \frac{ V_{Ms} }{ \frac{R_R}{S} + j*\omega * L_R } $$" style="width:167px;height:37px;"></p><p>Knowing now the Rotor current we can find the Phase Power on each phase with:</p><p><img src="main_eq14357960882172912470.png" alt="$$ P = I_R^2 * \frac{ R_R * (S-1) }{ S } $$" style="width:142px;height:31px;"></p><p>The Mechanical Power is the sum of the Power in the three fases:</p><p><img src="main_eq07382002559056197895.png" alt="$$ P_{Mec} = 3 * P $$" style="width:83px;height:13px;"></p><p>Finally, the Torque is given by:</p><p><img src="main_eq12168140676938711788.png" alt="$$ T = \frac{ P_{Mec} }{ \Omega_S } $$" style="width:62px;height:33px;"></p><pre class="codeinput">clear
+clc
+close <span class="string">all</span>
+frequency = 0:0.76:76;
+stator_voltage = 0:0.76:76;
+slip = 0:0.01:1;
+slip = fliplr(slip);
 <span class="comment">%</span>
-<span class="comment">% -&gt; Then we procede to calculate %I_R% with KCL:</span>
-<span class="comment">%</span>
-<span class="comment">% \begin{equation}</span>
-<span class="comment">%    I_R = I_S - \frac{ V_{Ms} }{ \frac{R_R}{S} + j*\omega * L_R }</span>
-<span class="comment">% \end{equation}</span>
-<span class="comment">%</span>
-<span class="comment">% -&gt; Knowing now the Rotor current we can find the Phase Power on each phase with:</span>
-<span class="comment">%</span>
-<span class="comment">% \begin{equation}</span>
-<span class="comment">%    P = I_R^2 * \frac{ R_R * (S-1) }{ S }</span>
-<span class="comment">% \end{equation}</span>
-<span class="comment">%</span>
-<span class="comment">% -&gt; The Mechanical Power is the sum of the Power in the three fases:</span>
-<span class="comment">%</span>
-<span class="comment">% \begin{equation}</span>
-<span class="comment">%    P_{Mec} = 3 * P</span>
-<span class="comment">% \end{equation}</span>
-<span class="comment">%</span>
-<span class="comment">% -&gt; Finally, the Torque is given by:</span>
-<span class="comment">%</span>
-<span class="comment">% \begin{equation}</span>
-<span class="comment">%    T = \frac{ P_{Mec} }{ \Omega_S }</span>
-<span class="comment">% \end{equation}</span>
-<span class="comment">%</span>
-</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+torque_sim = sim(<span class="string">'induction_motor'</span>);
+figure();
+plot(frequency, abs(torque_sim.torque), <span class="string">'LineWidth'</span>, 1);
+set( gca, <span class="string">'FontSize'</span>, 11);
+grid <span class="string">on</span>;
+title(<span class="string">'Torque'</span>);
+xlabel(<span class="string">'Frequancy $[Hz]$'</span>,<span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
+ylabel(<span class="string">'Torque [$Nm$]'</span>,<span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
+</pre><img vspace="5" hspace="5" src="main_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Vienna Car part2
 %% Induction Motor Model Characteristics 
 % For the first task with the already known constants it's possible to calculate the values for the remaining incognites of the indution motor equivelent circuit.
-% Starting with the Stator current:
+%%
+% Starting with the stator current:
 %% 
-% $I_s = { V_S \over  Z_S + ({R_R \over S} + j\omega L_R) // ( j \omega L_{Ms})}$
-%
-
-% -> With respects to the %V_{Ms}% we obtain the following expression with KVL:
-
-% \begin{equation}
-%    V_{Ms} = V_S - I_S * Z_S
-% \end{equation}
-%
-% -> Then we procede to calculate %I_R% with KCL:
-%
-% \begin{equation}
-%    I_R = I_S - \frac{ V_{Ms} }{ \frac{R_R}{S} + j*\omega * L_R }
-% \end{equation}
-%
-% -> Knowing now the Rotor current we can find the Phase Power on each phase with:
-%
-% \begin{equation}
-%    P = I_R^2 * \frac{ R_R * (S-1) }{ S }
-% \end{equation}
-%
-% -> The Mechanical Power is the sum of the Power in the three fases:
-%
-% \begin{equation}
-%    P_{Mec} = 3 * P
-% \end{equation}
-%
-% -> Finally, the Torque is given by:
-%
-% \begin{equation}
-%    T = \frac{ P_{Mec} }{ \Omega_S }
-% \end{equation}
+% $$I_s = { V_S \over  Z_S + ({R_R \over S} + j\omega L_R) //( j \omega
+% L_{Ms})}$$
+%%
+% With respects to the $V_{Ms}$ we obtain the following expression with KVL:
+%%
+% $$ V_{Ms} = V_S - I_S * Z_S $$
+%%
+% Then we procede to calculate $I_R$ with KCL:
+%%
+% $$ I_R = I_S - \frac{ V_{Ms} }{ \frac{R_R}{S} + j*\omega * L_R } $$
+%%
+% Knowing now the Rotor current we can find the Phase Power on each phase with:
+%%
+% $$ P = I_R^2 * \frac{ R_R * (S-1) }{ S } $$
+%%
+% The Mechanical Power is the sum of the Power in the three fases:
+%%
+% $$ P_{Mec} = 3 * P $$
+%%
+% Finally, the Torque is given by:
+%%
+% $$ T = \frac{ P_{Mec} }{ \Omega_S } $$
 % 
+%%
+clear
+clc
+close all
+frequency = 0:0.76:76;
+stator_voltage = 0:0.76:76;
+slip = 0:0.01:1;
+slip = fliplr(slip);
+%
+torque_sim = sim('induction_motor');
+figure();
+plot(frequency, abs(torque_sim.torque), 'LineWidth', 1);
+set( gca, 'FontSize', 11);
+grid on;
+title('Torque');
+xlabel('Frequancy $[Hz]$','Interpreter', 'latex');
+ylabel('Torque [$Nm$]','Interpreter', 'latex');
+
 ##### SOURCE END #####
 --></body></html>
