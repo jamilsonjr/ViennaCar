@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Vienna Car part2</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-06"><meta name="DC.source" content="main.m"><style type="text/css">
+      --><title>Vienna Car part2</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-07"><meta name="DC.source" content="main.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,9 +66,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Vienna Car part2</h1><!--introduction--><p>In this part of the Vienna Car project, the behavior of the induction motor will be simulated.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Induction Motor Model Characteristics</a></li><li><a href="#24">Initial and Maximun Torque</a></li></ul></div><pre class="codeinput">open_system(<span class="string">'induction_motor'</span>);
+  </style></head><body><div class="content"><h1>Vienna Car part2</h1><!--introduction--><p>In this part of the Vienna Car project, the behavior of the induction motor will be simulated.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Induction Motor Model Characteristics</a></li><li><a href="#24">Initial and Maximun Torque</a></li><li><a href="#34">TASK 3</a></li><li><a href="#36">rotor_speed_sim = sim('vienna_car_part2');</a></li></ul></div><pre class="codeinput">open_system(<span class="string">'induction_motor'</span>);
 </pre><img vspace="5" hspace="5" src="main_01.png" alt=""> <h2 id="2">Induction Motor Model Characteristics</h2><p>From the motor characteristic constants given in the project script, one can calculate the impedances, currents and voltages of the circuit.</p><pre class="codeinput">open_system(<span class="string">'induction_motor/Induction Motor'</span>);
-</pre><img vspace="5" hspace="5" src="main_02.png" alt=""> <p>From the KCL one can obtain that:</p><p><img src="main_eq15724289732476933470.png" alt="$$I_s = I_M + I_R$$" style="width:82px;height:13px;"></p><p>The stator current is given by the stator voltage divided by the equivalent impedance of the circuit:</p><p><img src="main_eq09345683572140035856.png" alt="$$ I_s = \frac{ V_s }{ (R_s + j\omega l_{\sigma s}) + (j\omega L_{Ms})//( \frac{(s-1)R_r}{s} + R_r + j\omega l_{\sigma r }) }$$" style="width:337px;height:39px;"></p><p>The rotor current is given by:</p><p><img src="main_eq00001312191252074262.png" alt="$$ I_r = I_s - \frac{ V_{M} }{ j\omega  L_{Ms} } $$" style="width:107px;height:33px;"></p><p>Applying the KVL to the left circuit loop, one can obtain <img src="main_eq02531274156756393948.png" alt="$V_{Ms}$" style="width:23px;height:13px;"> as:</p><p><img src="main_eq00189269420658218669.png" alt="$$ V_{Ms} = V_S - I_S  Z_S $$" style="width:109px;height:13px;"></p><p>Knowing now the rotor current, now it is possible to find the mechanical power output of the machine:</p><p><img src="main_eq17157010500301411091.png" alt="$$ P{mec} = 3 I_r^2 \frac{ R_r  (s-1) }{ s } $$" style="width:140px;height:31px;"></p><p>Notice that the power output of the machine is three times the power otuput of each phase.</p><p>Finally, the torque is given by the racio between the mechanical power and the rotor's angular velocity:</p><p><img src="main_eq00137859979739505550.png" alt="$$ T = \frac{ P_{mec} }{ s\omega } $$" style="width:60px;height:31px;"></p><p>So, from the simulink model of the induction motor, one can see the lines of torque for different stator voltage and frequencies, being V/f = 1:</p><pre class="codeinput">clear
+</pre><p>From the KCL one can obtain that:</p><p><img src="main_eq15724289732476933470.png" alt="$$I_s = I_M + I_R$$" style="width:82px;height:13px;"></p><p>The stator current is given by the stator voltage divided by the equivalent impedance of the circuit:</p><p><img src="main_eq09345683572140035856.png" alt="$$ I_s = \frac{ V_s }{ (R_s + j\omega l_{\sigma s}) + (j\omega L_{Ms})//( \frac{(s-1)R_r}{s} + R_r + j\omega l_{\sigma r }) }$$" style="width:337px;height:39px;"></p><p>The rotor current is given by:</p><p><img src="main_eq00001312191252074262.png" alt="$$ I_r = I_s - \frac{ V_{M} }{ j\omega  L_{Ms} } $$" style="width:107px;height:33px;"></p><p>Applying the KVL to the left circuit loop, one can obtain <img src="main_eq02531274156756393948.png" alt="$V_{Ms}$" style="width:23px;height:13px;"> as:</p><p><img src="main_eq00189269420658218669.png" alt="$$ V_{Ms} = V_S - I_S  Z_S $$" style="width:109px;height:13px;"></p><p>Knowing now the rotor current, now it is possible to find the mechanical power output of the machine:</p><p><img src="main_eq17157010500301411091.png" alt="$$ P{mec} = 3 I_r^2 \frac{ R_r  (s-1) }{ s } $$" style="width:140px;height:31px;"></p><p>Notice that the power output of the machine is three times the power otuput of each phase.</p><p>Finally, the torque is given by the racio between the mechanical power and the rotor's angular velocity:</p><p><img src="main_eq00137859979739505550.png" alt="$$ T = \frac{ P_{mec} }{ s\omega } $$" style="width:60px;height:31px;"></p><p>So, from the simulink model of the induction motor, one can see the lines of torque for different stator voltage and frequencies, being V/f = 1:</p><pre class="codeinput">clear
 clc
 close <span class="string">all</span>
 </pre><p>In order to understand the behavior of the torque for several V/f = 1 values, a simulation of the induction motor will be made with the following inputs.</p><pre class="codeinput">frequency_stator_vector = 10:1:76;
@@ -95,7 +95,7 @@ init_torque_values = [];
     <span class="keyword">end</span>
 <span class="keyword">end</span>
 legend(<span class="string">'frequency = 10 [Hz]'</span>, <span class="string">'frequency = 30 [Hz]'</span>, <span class="string">'frequency = 50 [Hz]'</span>, <span class="string">'frequency = 60 [Hz]'</span>, <span class="string">'frequency = 76 [Hz]'</span>);
-</pre><img vspace="5" hspace="5" src="main_03.png" alt=""> <p>TODO: Interpretation</p><h2 id="24">Initial and Maximun Torque</h2><p>Now, it is interesting to study what are the V/f = 1 values that possess the highest initial and maximum torque, in order to discover what are the best operation conditions for the induction motor. To do that, one must only sweep through the various values of V/f = 1 , and then plot the values initial and maximum torque.</p><p>With the values calculated computed before, one can plot the follow behavior:</p><pre class="codeinput"> [max_init_torque, frequency] = max(init_torque_values);
+</pre><p>TODO: Interpretation</p><h2 id="24">Initial and Maximun Torque</h2><p>Now, it is interesting to study what are the V/f = 1 values that possess the highest initial and maximum torque, in order to discover what are the best operation conditions for the induction motor. To do that, one must only sweep through the various values of V/f = 1 , and then plot the values initial and maximum torque.</p><p>With the values calculated computed before, one can plot the follow behavior:</p><pre class="codeinput"> [max_init_torque, frequency] = max(init_torque_values);
  figure()
  plot(frequency_stator_vector, init_torque_values, frequency_stator_vector(frequency),init_torque_values(frequency),<span class="string">'pr'</span>, <span class="string">'LineWidth'</span>, 1);
  set( gca, <span class="string">'FontSize'</span>, 11);
@@ -104,11 +104,12 @@ legend(<span class="string">'frequency = 10 [Hz]'</span>, <span class="string">'
  xlabel(<span class="string">'Stator Frequency $[Hz]$'</span>,<span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
  ylabel(<span class="string">'Initial Torque [$Nm$]'</span>,<span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
  max_initual_torque_value = sprintf(<span class="string">'The maximum initial torque is qiven by: frequency = %d [Hz] , Initial Torque = %d [Nm]'</span>, frequency_stator_vector(frequency), init_torque_values(frequency));
-</pre><img vspace="5" hspace="5" src="main_04.png" alt=""> <p>Obtaining the following result:</p><pre class="codeinput"> display(max_initial_torque_value);
-</pre><pre class="codeoutput error">Unrecognized function or variable 'max_initial_torque_value'.
+</pre><img vspace="5" hspace="5" src="main_02.png" alt=""> <p>Obtaining the following result:</p><pre class="codeinput"> display(max_initual_torque_value);
+</pre><pre class="codeoutput">
+max_initual_torque_value =
 
-Error in main (line 95)
- display(max_initial_torque_value);
+    'The maximum initial torque is qiven by: frequency = 23 [Hz] , Initial Torque = 4.967301e+01 [Nm]'
+
 </pre><p>The same approach can be taken for the Maximum torque:</p><pre class="codeinput"> [max_torque, frequency] = max(max_torque_values);
  figure()
  plot(frequency_stator_vector, max_torque_values, frequency_stator_vector(frequency),max_torque_values(frequency),<span class="string">'pr'</span>, <span class="string">'LineWidth'</span>, 1);
@@ -118,8 +119,16 @@ Error in main (line 95)
  xlabel(<span class="string">'Stator Frequency $[Hz]$'</span>,<span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
  ylabel(<span class="string">'Maximum Torque [$Nm$]'</span>,<span class="string">'Interpreter'</span>, <span class="string">'latex'</span>);
  max_torque_value = sprintf(<span class="string">'The maximum torque is qiven by: frequency = %d [Hz] , Initial Torque = %d [Nm]'</span>, frequency_stator_vector(frequency), max_torque_values(frequency));
-</pre><p>Obtaining the following result:</p><pre class="codeinput"> display(max_torque_value);
-</pre><p>TODO: Intepret</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+</pre><img vspace="5" hspace="5" src="main_03.png" alt=""> <p>Obtaining the following result:</p><pre class="codeinput"> display(max_torque_value);
+</pre><pre class="codeoutput">
+max_torque_value =
+
+    'The maximum torque is qiven by: frequency = 76 [Hz] , Initial Torque = 7.815393e+01 [Nm]'
+
+</pre><p>TODO: Intepret</p><h2 id="34">TASK 3</h2><pre class="codeinput"> clc
+ load(<span class="string">'../vienna_car_part1/sim_part1'</span>);
+</pre><pre class="codeinput"> test = sim(<span class="string">'vienna_car_part2'</span>);
+</pre><h2 id="36">rotor_speed_sim = sim('vienna_car_part2');</h2><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Vienna Car part2
 % In this part of the Vienna Car project, the behavior of the induction motor will be simulated.
@@ -215,7 +224,7 @@ legend('frequency = 10 [Hz]', 'frequency = 30 [Hz]', 'frequency = 50 [Hz]', 'fre
  %%
  % Obtaining the following result:
  %%
- display(max_initial_torque_value);
+ display(max_initual_torque_value);
 %% 
 % The same approach can be taken for the Maximum torque:
 %% 
@@ -234,5 +243,13 @@ legend('frequency = 10 [Hz]', 'frequency = 30 [Hz]', 'frequency = 50 [Hz]', 'fre
  display(max_torque_value);
  %%
  % TODO: Intepret
+ %% TASK 3
+ %
+ clc
+ load('../vienna_car_part1/sim_part1');
+%% 
+ test = sim('vienna_car_part2');
+ %% rotor_speed_sim = sim('vienna_car_part2');
+ 
 ##### SOURCE END #####
 --></body></html>

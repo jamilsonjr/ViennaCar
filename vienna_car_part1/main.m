@@ -227,8 +227,9 @@ display(trapz(track2.time, traction_power/(1000*3600)));
 % Finally, one can see that the difference in total energy spent to achieve approximately the same final velocity is more or less the same. This is due to the fact that the final kinetic energy of the cars in both tracks is the same. However, it is to notice that in track 1 the car also has slight variation in potential energy, explaining the small difference in the final energy spent in both tracks.
 
 
-
-
-
-
-
+%%
+track2.wheel_speed_rpm(1) = [];  %% Porque dá indeterminações na parte2
+track2.time(1) = [];
+reference_speed = [track2.time track2.wheel_speed_rpm];
+save('sim_part1');
+close all

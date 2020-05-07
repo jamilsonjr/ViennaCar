@@ -111,3 +111,11 @@ legend('frequency = 10 [Hz]', 'frequency = 30 [Hz]', 'frequency = 50 [Hz]', 'fre
  display(max_torque_value);
  %%
  % TODO: Intepret
+ %% TASK 3
+ %
+ clc
+ load('../vienna_car_part1/sim_part1');
+%% 
+ test = sim('vienna_car_part2');
+ %% rotor_speed_sim = sim('vienna_car_part2');
+ 
