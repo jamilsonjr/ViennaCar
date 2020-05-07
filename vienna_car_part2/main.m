@@ -115,7 +115,41 @@ legend('frequency = 10 [Hz]', 'frequency = 30 [Hz]', 'frequency = 50 [Hz]', 'fre
  %
  clc
  load('../vienna_car_part1/sim_part1');
-%% 
- test = sim('vienna_car_part2');
- %% rotor_speed_sim = sim('vienna_car_part2');
- 
+ close all
+%%
+slope_of_track = 3;
+torque  = 150;
+reference_speed = reference_speed_track2;
+simulation_length_track = distance_A_B;
+% track1_part2 = sim('vienna_car_part2');
+% %%
+% slope_of_track = 0;
+% reference_speed = reference_speed_track2;
+% simulation_length_track = track2_length;
+% track2_part2 = sim('vienna_car_part2');
+% 
+% %%
+% track1.position(1) = [];
+% plot(track1.time, track1.position);
+% hold all
+% plot(track1_part2.time, track1_part2.position);
+% grid on
+% 
+% %%
+% track1.velocity(1) = [];
+% plot(track1.time, track1.velocity);
+% hold all
+% plot(track1_part2.time, track1_part2.velocity);
+% grid on
+% 
+% %%
+% track1.acceleration(1) = [];
+% plot(track1.time, track1.acceleration);
+% hold all
+% plot(track1_part2.time, track1_part2.acceleration);
+% grid on
+% 
+% 
+% 
+%  %% rotor_speed_sim = sim('vienna_car_part2');
+%  
