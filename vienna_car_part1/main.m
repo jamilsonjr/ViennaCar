@@ -234,5 +234,7 @@ reference_speed_track2 = [track2.time track2.wheel_speed_rpm];
 track1.wheel_speed_rpm(1) = [];
 track1.time(1) = [];
 reference_speed_track1 = [track1.time track1.wheel_speed_rpm];
-save('sim_part1');
 close all
+AVE = 2020;
+
+save('sim_part1');
