@@ -91,5 +91,22 @@ hold on
 plot(Torque_eq_circuit_model.Time,E_eq)
 title('Active Energy [J]')
 legend('dq-model','Equivalent circuit model')
+%%
+% close all 
+% 
+% figure()
+% plot(stator_currents_dq_model_junior.Time,stator_currents_dq_model_junior.Data)
+% title('currents in dq [A]')
+% legend('dq-model')
+% 
+% figure()
+% plot(stator_currents_dq_model_junior_d.Time,stator_currents_dq_model_junior_d.Data)
+% title('currents in d [A]')
+% legend('dq-model')
+% 
+% figure()
+% plot(stator_currents_dq_model_junior_q.Time,stator_currents_dq_model_junior_q.Data)
+% title('currents in q [A]')
+% legend('dq-model')
 
 save('sim_professor_part4');

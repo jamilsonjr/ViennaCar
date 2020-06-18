@@ -71,6 +71,18 @@ subplot(1,2,2)
 plot(Torque.Time,E_dq)
 title('Active Energy [J]')
 
-
-
-
+%%
+figure()
+plot(my_I123.Time, my_I123.Data);
+%%
+figure()
+plot(stator_currents.Time,stator_currents.Data)
+title('stator currents [A]')
+%%
+close all
+figure()
+plot(rotor_currents.Time,rotor_currents.Data)
+title('rotor currents [A]')
+%%
+figure()
+plot(my_Ir123.Time, my_Ir123.Data);
